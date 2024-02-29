@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Search images</title>
+    <style>
+      body{
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        text-align: center;
+        flex-wrap: wrap;
+        align-items: center;
+      }
+      button {
+        width: 100%;
+        padding: 5px 0px 5px 0px;
+        color: #fff;
+        background-color: #0e6aff;
+        border: none;
+        margin-top: 20px;
+        border-radius: 7px;
+      }
+      button:active{
+        background-color: #0e6adf;
+      }
+      img{
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="j">
+      <h1>Choose where you want to search image </h1>
+      <button id="open-google"><img src="https://i.ibb.co/3CXCYQp/download.png"><br>Google</button>
+      <button id="open-pexels"><img src='https://i.postimg.cc/ZWR8Yw4g/images.jpg'><br>Pexels</button>
+    </div>
+    <script>
+      document.getElementById('open-google').addEventListener('click', function (){
+        var r = document.createElement('a');
+        r.href = 'Google.html';
+        r.click();
+      })
+      document.getElementById('open-pexels').addEventListener('click', function (){
+        var r = document.createElement('a');
+        r.href = 'Pexels.html';
+        r.click();
+      })
+    </script>
+  </body>
+</html>

@@ -29,7 +29,7 @@
         left: 0;
         margin: 0;
         padding: 0;
-        width: 55px;
+        width: 50px;
         overflow: auto;
         text-align: center;
         justify-content: space-between;
@@ -38,12 +38,15 @@
         bottom: 55px;
         background-color: #434343;
       }
+      #s{
+        font-size: 12px;
+      }
       #editor{
         position: fixed;
-        top: 51px;
+        top: 50px;
         right: 0;
-        left: 55px;
-        bottom: 70px;
+        left: 50px;
+        bottom: 60px;
       }
       #preview, .preview{
         position: fixed;
@@ -63,17 +66,17 @@
         display: flex;
         justify-content: space-between;
         flex-wrap: wrap;
-        height: 70px;
+        height: 60px;
         background-color: #434343;
       }
       button{
-        width: 50px;
+        width: 40px;
         border: none;
         background-color: #434343;
         color: #fff;
         text-align: center;
         border-radius: 0%;
-        font-size: 25px;
+        font-size: 20px;
       }
       button:active{
         background-color: #313131d7;
@@ -116,9 +119,6 @@
         margin-top: 5px;
         border-radius: 0%;
         border: 2px solid transparent;
-      }
-      #s{
-        font-size: 15px;
       }
       #header2{
         position: fixed;
@@ -288,6 +288,7 @@
       <button id="copy"><i class="fa fa-copy"></i><span id="s">Copy</span></button>
       <button id="font"><i class="fa fa-font"></i><span id="s">Font Size</span></button>
       <button id="select-all"><i class="fas fa-list"></i><span id="s">Select All</span></button>
+      <button id="downloadFile" onclick="downloadFile()"><i class="fa fa-save"></i><span id="s">Save File</span></button>
       <button id="arrowUp"><i class="fa fa-arrow-up"></i><span id="s">Line Up</span></button>
       <button id="arrowDown"><i class="fa fa-arrow-down"></i><span id="s">Line Down</span></button>
       <button id="images"><i class="fa fa-images"></i><span id="s">Images</span></button>
@@ -537,16 +538,41 @@
     function upload() {
     var input = document.createElement('input');
     input.type = 'file';
+    input.accept = '.html,.css,.js'; // Accept only HTML, CSS, and JS files
     input.onchange = function () {
         var file = input.files[0];
         var reader = new FileReader();
         reader.onload = function () {
-            editor.setValue(reader.result);
+            var extension = file.name.split('.').pop().toLowerCase();
+            if (extension === 'html' || extension === 'css' || extension === 'js') {
+                editor.setValue(reader.result);
+            } else {
+                alert('Please upload only .html, .css, or .js files.');
+            }
         };
         reader.readAsText(file);
     };
     input.click();
     }
+    // Define the downloadFile function to trigger a file download with the content of the editor
+function downloadFile() {
+    let editorContent = editor.getValue();
+    let parser = new DOMParser();
+    let htmlDoc = parser.parseFromString(editorContent, 'text/html');
+    let title = htmlDoc.querySelector('title').textContent.trim();
+    
+    let blob = new Blob([editorContent], { type: 'text/plain' });
+    let url = URL.createObjectURL(blob);
+
+    let a = document.createElement('a');
+    a.href = url;
+    alert('Remember your file name is title of your html file ' + title);
+    a.download = `${title}.html`; // Use the extracted title for the file name
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+}
     </script>
     <script>
       function downloadApps () {

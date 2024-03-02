@@ -559,14 +559,13 @@ function downloadFile() {
     let editorContent = editor.getValue();
     let parser = new DOMParser();
     let htmlDoc = parser.parseFromString(editorContent, 'text/html');
-    let title = htmlDoc.querySelector('title').textContent.trim();
-    
+    let titleElement = htmlDoc.querySelector('title');
+    let title = titleElement ? titleElement.textContent.trim() : alert('Automatically Save File Name WebCoderV⁸/Untitled');
     let blob = new Blob([editorContent], { type: 'text/plain' });
     let url = URL.createObjectURL(blob);
 
     let a = document.createElement('a');
     a.href = url;
-    alert('Remember your file name is title of your html file ' + title);
     a.download = `${title}.html`; // Use the extracted title for the file name
     document.body.appendChild(a);
     a.click();
